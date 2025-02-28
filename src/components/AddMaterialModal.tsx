@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from '@radix-ui/react-dialog';
+import { Dialog, DialogContent, DialogTitle, DialogClose } from '@radix-ui/react-dialog';
 import { X } from 'lucide-react';
 
 interface AddMaterialModalProps {
@@ -69,7 +69,7 @@ const AddMaterialModal: React.FC<AddMaterialModalProps> = ({ isOpen, onClose, on
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
         <div className="bg-white rounded-md shadow-lg w-full max-w-4xl mx-4 max-h-[90vh] overflow-y-auto">
-          <DialogHeader className="flex justify-between items-center p-4 border-b border-slate-200">
+          <div className="flex justify-between items-center p-4 border-b border-slate-200">
             <DialogTitle className="text-lg font-medium">Agregar Nuevo Material</DialogTitle>
             <button 
               onClick={onClose}
@@ -77,7 +77,7 @@ const AddMaterialModal: React.FC<AddMaterialModalProps> = ({ isOpen, onClose, on
             >
               <X size={16} />
             </button>
-          </DialogHeader>
+          </div>
           
           <form onSubmit={handleSubmit} className="p-4">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
@@ -271,7 +271,7 @@ const AddMaterialModal: React.FC<AddMaterialModalProps> = ({ isOpen, onClose, on
               </div>
             </div>
             
-            <DialogFooter className="pt-4 border-t border-slate-200 flex justify-end gap-2">
+            <div className="pt-4 border-t border-slate-200 flex justify-end gap-2">
               <button 
                 type="button" 
                 onClick={onClose}
@@ -285,7 +285,7 @@ const AddMaterialModal: React.FC<AddMaterialModalProps> = ({ isOpen, onClose, on
               >
                 Guardar Material
               </button>
-            </DialogFooter>
+            </div>
           </form>
         </div>
       </DialogContent>
