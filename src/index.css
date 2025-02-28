@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -34,21 +35,10 @@
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --cpanel-dark-blue: 219, 28%, 18%;
+    --cpanel-yellow: 53, 100%, 50%;
+    --cpanel-text: 0, 0%, 20%;
+    --cpanel-light-gray: 0, 0%, 96%;
   }
 
   .dark {
@@ -79,14 +69,6 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -96,6 +78,29 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-slate-100 text-foreground m-0 p-0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+}
+
+@layer components {
+  .sidebar-item {
+    @apply flex items-center py-3 px-4 text-sm font-medium hover:bg-slate-200 cursor-pointer transition-colors;
+  }
+  
+  .sidebar-item.active {
+    @apply bg-yellow-400 hover:bg-yellow-500;
+  }
+  
+  .sidebar-item-with-arrow {
+    @apply sidebar-item justify-between;
+  }
+  
+  .table-cell {
+    @apply px-3 py-2 text-sm border-b border-slate-200;
+  }
+  
+  .table-header {
+    @apply px-3 py-2 text-sm font-medium text-left bg-slate-50 border-b border-slate-200;
   }
 }
