@@ -1,5 +1,6 @@
 
-import React from 'react';
+import React, { useState } from 'react';
+import AddMaterialModal from './AddMaterialModal';
 
 interface MaterialRow {
   id: number;
@@ -22,7 +23,7 @@ interface MaterialRow {
   pCosteTot: string;
 }
 
-const materialData: MaterialRow[] = [
+const initialMaterialData: MaterialRow[] = [
   {
     id: 1,
     producto: "Relleno de fibra de 135cm",
@@ -206,7 +207,42 @@ const materialData: MaterialRow[] = [
 ];
 
 const MaterialTable: React.FC = () => {
-  const totalEUR = "1.154 EUR";
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [materialData, setMaterialData] = useState<MaterialRow[]>(initialMaterialData);
+  
+  // Calcular el total sumando los valores numéricos de costeM2 de todos los materiales
+  const calculateTotal = (): string => {
+    // Extraer solo los números de las cadenas con formato "XX EUR"
+    const total = materialData.reduce((sum, item) => {
+      const value = parseFloat(item.costeM2.replace(/[^\d.-]/g, '')) || 0;
+      return sum + value;
+    }, 0);
+    
+    return `${total.toFixed(0)} EUR`;
+  };
+  
+  const totalEUR = calculateTotal();
+  
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+  
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+  
+  const handleSaveMaterial = (newMaterial: Omit<MaterialRow, 'id'>) => {
+    // Generar un nuevo ID (el más alto actual + 1)
+    const newId = Math.max(...materialData.map(item => item.id)) + 1;
+    
+    // Añadir el nuevo material con el ID generado
+    setMaterialData([
+      ...materialData,
+      { ...newMaterial, id: newId }
+    ]);
+    
+    console.log('Nuevo material agregado:', { ...newMaterial, id: newId });
+  };
   
   return (
     <div className="bg-white rounded-sm border border-slate-200 overflow-hidden">
@@ -265,7 +301,10 @@ const MaterialTable: React.FC = () => {
           </table>
         </div>
         <div className="flex justify-between p-4">
-          <button className="px-4 py-2 bg-slate-800 text-white font-medium rounded-sm hover:bg-slate-700 transition-colors">
+          <button 
+            className="px-4 py-2 bg-slate-800 text-white font-medium rounded-sm hover:bg-slate-700 transition-colors"
+            onClick={handleOpenModal}
+          >
             AGREGAR MATERIAL
           </button>
           <div className="flex items-center">
@@ -274,6 +313,12 @@ const MaterialTable: React.FC = () => {
           </div>
         </div>
       </div>
+      
+      <AddMaterialModal 
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSave={handleSaveMaterial}
+      />
     </div>
   );
 };
